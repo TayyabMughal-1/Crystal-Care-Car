@@ -1,39 +1,37 @@
 import { useEffect, useRef, useState } from "react";
 
-const WIPE_LIFETIME_MS = 2600;
-const WIPE_RADIUS = 85;
-const MAX_POINTS = 40;
-const MIN_POINT_DISTANCE = 14;
-const MIN_POINT_INTERVAL_MS = 16;
-const PATCH_MASK =
-  "radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)";
+const BEFORE =
+  "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=90";
+const AFTER =
+  "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&q=90";
+
+const RADIUS = 100;
+const LIFETIME = 2800;
+const MAX_PTS = 44;
+const MIN_DIST = 10;
+const MIN_MS = 14;
+const MASK = "radial-gradient(circle, black 0%, black 50%, transparent 100%)";
 
 export default function BeforeAfterSlider() {
-  const beforeImage =
-    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1400&q=90";
-  const afterImage =
-    "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1400&q=90";
-
   const frameRef = useRef(null);
-  const pointsRef = useRef([]);
+  const ptsRef = useRef([]);
+  const rafRef = useRef(null);
+
   const [patches, setPatches] = useState([]);
   const [interactive, setInteractive] = useState(false);
   const [hasWiped, setHasWiped] = useState(false);
-  const [frameSize, setFrameSize] = useState({ width: 1, height: 1 });
+  const [size, setSize] = useState({ w: 1, h: 1 });
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    setInteractive(!reduceMotion);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setInteractive(!reduced);
 
     const measure = () => {
       if (frameRef.current) {
-        const rect = frameRef.current.getBoundingClientRect();
-        setFrameSize({ width: rect.width, height: rect.height });
+        const r = frameRef.current.getBoundingClientRect();
+        setSize({ w: r.width, h: r.height });
       }
     };
-
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
@@ -41,76 +39,51 @@ export default function BeforeAfterSlider() {
 
   useEffect(() => {
     if (!interactive) return;
-
-    let isActive = true;
-    let frameId = null;
+    let alive = true;
 
     const tick = () => {
-      if (!isActive) return;
-
+      if (!alive) return;
       const now = performance.now();
-      pointsRef.current = pointsRef.current.filter(
-        (p) => now - p.t < WIPE_LIFETIME_MS,
+      ptsRef.current = ptsRef.current.filter((p) => now - p.t < LIFETIME);
+      setPatches(
+        ptsRef.current.map((p) => ({
+          ...p,
+          opacity: Math.max(0, 1 - (now - p.t) / LIFETIME),
+        }))
       );
-
-      const next = pointsRef.current.map((p) => {
-        const age = (now - p.t) / WIPE_LIFETIME_MS;
-        const opacity = Math.max(0, 1 - age);
-        return { x: p.x, y: p.y, opacity, id: p.id };
-      });
-
-      setPatches(next);
-
-      if (isActive) {
-        frameId = requestAnimationFrame(tick);
-      }
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    frameId = requestAnimationFrame(tick);
+    rafRef.current = requestAnimationFrame(tick);
     return () => {
-      isActive = false;
-      if (frameId) cancelAnimationFrame(frameId);
+      alive = false;
+      cancelAnimationFrame(rafRef.current);
     };
   }, [interactive]);
 
-  const addPoint = (clientX, clientY) => {
+  const addPoint = (cx, cy) => {
     const rect = frameRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    const x = cx - rect.left;
+    const y = cy - rect.top;
     const now = performance.now();
 
-    if (frameRef.current) {
-      frameRef.current.style.setProperty("--cursor-x", `${x}px`);
-      frameRef.current.style.setProperty("--cursor-y", `${y}px`);
-    }
+    frameRef.current.style.setProperty("--cx", `${x}px`);
+    frameRef.current.style.setProperty("--cy", `${y}px`);
 
-    const last = pointsRef.current[pointsRef.current.length - 1];
+    const last = ptsRef.current[ptsRef.current.length - 1];
     if (last) {
-      const dx = x - last.x;
-      const dy = y - last.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const elapsed = now - last.t;
-      if (dist < MIN_POINT_DISTANCE && elapsed < MIN_POINT_INTERVAL_MS) {
-        return;
-      }
+      const dx = x - last.x, dy = y - last.y;
+      if (Math.sqrt(dx * dx + dy * dy) < MIN_DIST && now - last.t < MIN_MS) return;
     }
 
-    pointsRef.current.push({ x, y, t: now, id: `${now}-${Math.random()}` });
-    if (pointsRef.current.length > MAX_POINTS) {
-      pointsRef.current.shift();
-    }
+    ptsRef.current.push({ x, y, t: now, id: `${now}-${x}` });
+    if (ptsRef.current.length > MAX_PTS) ptsRef.current.shift();
     if (!hasWiped) setHasWiped(true);
   };
 
-  const handleMouseMove = (e) => {
-    if (!interactive) return;
-    addPoint(e.clientX, e.clientY);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!interactive) return;
-    const touch = e.touches[0];
-    if (touch) addPoint(touch.clientX, touch.clientY);
+  const onMouseMove = (e) => { if (interactive) addPoint(e.clientX, e.clientY); };
+  const onTouchMove = (e) => {
+    if (interactive && e.touches[0]) addPoint(e.touches[0].clientX, e.touches[0].clientY);
   };
 
   return (
@@ -125,60 +98,60 @@ export default function BeforeAfterSlider() {
           </p>
         </div>
         <span className="cc-result-badge">
-          {interactive ? "Wipe to reveal" : "Before / After"}
+          {interactive ? "Swipe to reveal" : "Before / After"}
         </span>
       </div>
 
       <div
-        className={`cc-wipe-frame ${hasWiped ? "has-wiped" : ""} ${interactive ? "" : "is-static"}`}
         ref={frameRef}
-        onMouseMove={handleMouseMove}
-        onTouchMove={handleTouchMove}
-        tabIndex={0}
-        aria-label="Car before and after detailing comparison. On a mouse or touch device, move across the photo to wipe away the dirt and reveal the clean result."
+        className={`cc-wipe-frame${hasWiped ? " has-wiped" : ""}${interactive ? "" : " is-static"}`}
+        onMouseMove={onMouseMove}
+        onTouchMove={onTouchMove}
+        aria-label="Move cursor or swipe to reveal the clean car"
       >
-        <img
-          className="cc-wipe-img cc-wipe-before"
-          src={beforeImage}
-          alt="Car before detailing"
-        />
-        <div className="cc-dirty-effect"></div>
+        {/* BEFORE — base layer */}
+        <img className="cc-wipe-img cc-wipe-before" src={BEFORE} alt="Car before detailing" />
+        <div className="cc-dirty-effect" />
 
-        {interactive &&
-          patches.map((p) => (
-            <div
-              key={p.id}
-              className="cc-wipe-patch"
-              style={{
-                left: `${p.x}px`,
-                top: `${p.y}px`,
-                width: `${WIPE_RADIUS * 2}px`,
-                height: `${WIPE_RADIUS * 2}px`,
-                opacity: p.opacity,
-                backgroundImage: `url('${afterImage}')`,
-                backgroundSize: `${frameSize.width}px ${frameSize.height}px`,
-                backgroundPosition: `${-(p.x - WIPE_RADIUS)}px ${-(p.y - WIPE_RADIUS)}px`,
-                WebkitMaskImage: PATCH_MASK,
-                maskImage: PATCH_MASK,
-              }}
-            />
-          ))}
+        {/* AFTER — wipe patches follow cursor */}
+        {interactive && patches.map((p) => (
+          <div
+            key={p.id}
+            className="cc-wipe-patch"
+            style={{
+              left: p.x,
+              top: p.y,
+              width: RADIUS * 2,
+              height: RADIUS * 2,
+              opacity: p.opacity,
+              backgroundImage: `url('${AFTER}')`,
+              backgroundSize: `${size.w}px ${size.h}px`,
+              backgroundPosition: `${-(p.x - RADIUS)}px ${-(p.y - RADIUS)}px`,
+              WebkitMaskImage: MASK,
+              maskImage: MASK,
+            }}
+          />
+        ))}
 
+        {/* Static after for reduced-motion / no-JS */}
         {!interactive && (
           <div className="cc-wipe-static-after">
-            <img
-              src={afterImage}
-              alt="Car after detailing"
-              className="cc-wipe-img"
-            />
+            <img src={AFTER} alt="Car after detailing" className="cc-wipe-img" />
           </div>
         )}
 
+        {/* Hint label — fades once user starts wiping */}
         <span className="cc-wipe-label">
-          {interactive
-            ? "Move your cursor to wipe clean"
-            : "Before \u2192 After"}
+          {interactive ? "Move your cursor to reveal" : "Before → After"}
         </span>
+
+        {/* Custom cursor ring */}
+        {interactive && (
+          <div
+            className="cc-cursor-ring"
+            style={{ left: "var(--cx, -999px)", top: "var(--cy, -999px)" }}
+          />
+        )}
       </div>
 
       <div className="cc-result-row">

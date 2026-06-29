@@ -1824,6 +1824,7 @@ p.motion-hero-sub {
   background: var(--bg-soft);
   border: 1px solid var(--line);
   cursor: none;
+  user-select: none;
 }
 
 .cc-wipe-frame.is-static {
@@ -1841,11 +1842,11 @@ p.motion-hero-sub {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center;
 }
 
 .cc-wipe-before {
-  filter: grayscale(0.5) brightness(0.78) contrast(0.92) saturate(0.55);
+  filter: grayscale(0.3) brightness(0.88) saturate(0.65);
 }
 
 .cc-wipe-patch {
@@ -1853,17 +1854,22 @@ p.motion-hero-sub {
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  filter: brightness(1.06) contrast(1.12) saturate(1.25);
+  filter: brightness(1.06) contrast(1.1) saturate(1.2);
 }
 
-.cc-wipe-static-after {
+
+/* Custom cursor ring */
+.cc-cursor-ring {
   position: absolute;
-  inset: 0;
-  clip-path: polygon(42% 0, 100% 0, 100% 100%, 58% 100%);
-}
-
-.cc-wipe-static-after .cc-wipe-img {
-  filter: brightness(1.06) contrast(1.12) saturate(1.25);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.18);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 8;
+  transition: opacity 0.2s ease;
 }
 
 .cc-dirty-effect {
@@ -1871,62 +1877,12 @@ p.motion-hero-sub {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(
-      circle at 22% 30%,
-      rgba(110, 82, 58, 0.46),
-      transparent 18%
-    ),
-    radial-gradient(circle at 44% 62%, rgba(70, 50, 35, 0.4), transparent 21%),
-    radial-gradient(circle at 76% 42%, rgba(85, 85, 85, 0.32), transparent 18%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.32));
+    radial-gradient(circle at 22% 30%, rgba(110, 82, 58, 0.42), transparent 18%),
+    radial-gradient(circle at 44% 62%, rgba(70, 50, 35, 0.36), transparent 21%),
+    radial-gradient(circle at 76% 42%, rgba(85, 85, 85, 0.28), transparent 18%),
+    linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.28));
   mix-blend-mode: multiply;
   opacity: 0.9;
-}
-
-.cc-wipe-label {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 5;
-  padding: 8px 13px;
-  border-radius: 999px;
-  color: #ffffff;
-  background: rgba(10, 28, 41, 0.62);
-  backdrop-filter: blur(10px);
-  font-size: 12px;
-  font-weight: 900;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.cc-wipe-frame.has-wiped .cc-wipe-label {
-  opacity: 0;
-}
-
-.cc-wipe-frame::after {
-  content: "";
-  position: absolute;
-  z-index: 6;
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.18);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  left: var(--cursor-x, 50%);
-  top: var(--cursor-y, 50%);
-  transform: translate(-50%, -50%);
-}
-
-.cc-wipe-frame:hover::after {
-  opacity: 1;
-}
-
-.cc-wipe-frame.is-static::after {
-  display: none;
 }
 
 .cc-result-row {
@@ -1976,12 +1932,9 @@ p.motion-hero-sub {
     margin-top: 14px;
   }
 
-  .cc-wipe-frame {
-    height: 380px;
-  }
 
-  .cc-wipe-frame::after {
-    display: none;
+  .cc-wipe-frame {
+    height: 320px;
   }
 
   .cc-result-row {

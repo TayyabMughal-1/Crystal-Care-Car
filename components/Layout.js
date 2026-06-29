@@ -129,10 +129,6 @@ export default function Layout({ children }) {
         </div>
       </footer>
 
-      <div className="mobile-sticky-cta">
-        <Link href="/contact">Book Now</Link>
-        <Link href="/services">Services</Link>
-      </div>
     </>
   );
 }

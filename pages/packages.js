@@ -26,7 +26,7 @@ export default function Packages() {
       <section>
         <div className="container grid-3">
           {packages.map((service) => (
-            <ServiceCard key={service.slug} service={service} />
+            <ServiceCard key={service.slug} service={service} linkLabel="View package" />
           ))}
         </div>
       </section>

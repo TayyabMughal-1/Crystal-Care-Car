@@ -28,6 +28,12 @@ export default function Home() {
 
       <Hero />
 
+      {/* Mobile-only CTA row — appears right below the hero */}
+      <div className="hero-mobile-cta">
+        <Link href="/contact" className="btn btn-primary">Book Now</Link>
+        <Link href="/services" className="btn btn-secondary">Our Services</Link>
+      </div>
+
       <section className="trust-section">
         <div className="container">
           <div className="trust-grid">

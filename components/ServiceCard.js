@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ServiceCard({ service }) {
+export default function ServiceCard({ service, linkLabel = "View service" }) {
   return (
     <article className="card reveal-card">
       <Link
@@ -16,7 +16,7 @@ export default function ServiceCard({ service }) {
         <h3>{service.title}</h3>
         <p>{service.short}</p>
         <Link className="card-link" href={`/services/${service.slug}`}>
-          View service <span>→</span>
+          {linkLabel} <span>→</span>
         </Link>
       </div>
     </article>

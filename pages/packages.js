@@ -1,16 +1,18 @@
-import Head from 'next/head'
-import Layout from '../components/Layout'
-import PageHero from '../components/PageHero'
-import ServiceCard from '../components/ServiceCard'
-import { services } from '../data/services'
+import Head from "next/head";
+import Layout from "../components/Layout";
+import PageHero from "../components/PageHero";
+import ServiceCard from "../components/ServiceCard";
+import { services } from "../data/services";
 
 export default function Packages() {
-  const packages = services.filter((service) => service.category === 'Subscription Packages')
+  const packages = services.filter(
+    (service) => service.category === "Subscription Packages",
+  );
 
   return (
     <Layout>
       <Head>
-        <title>Subscription Packages | Crystal Car Wash</title>
+        <title>Subscription Packages | Crystal Car Care</title>
         <meta
           name="description"
           content="Weekly, monthly, and family vehicle car wash packages in Islamabad and Rawalpindi. Regular car care without booking again and again."
@@ -23,9 +25,11 @@ export default function Packages() {
       />
       <section>
         <div className="container grid-3">
-          {packages.map((service) => <ServiceCard key={service.slug} service={service} />)}
+          {packages.map((service) => (
+            <ServiceCard key={service.slug} service={service} />
+          ))}
         </div>
       </section>
     </Layout>
-  )
+  );
 }

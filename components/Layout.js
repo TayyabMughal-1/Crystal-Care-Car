@@ -31,11 +31,11 @@ export default function Layout({ children }) {
           <Link
             href="/"
             className="logo"
-            aria-label="Crystal Car Wash homepage"
+            aria-label="Crystal Car Care homepage"
             onClick={closeMenu}
           >
             <span className="logo-mark">C</span>
-            <span>Crystal Car Wash</span>
+            <span>Crystal Car Care</span>
           </Link>
 
           <button
@@ -79,7 +79,7 @@ export default function Layout({ children }) {
             <div>
               <Link href="/" className="logo">
                 <span className="logo-mark">C</span>
-                <span>Crystal Car Wash</span>
+                <span>Crystal Car Care</span>
               </Link>
               <p>
                 Premium car wash, detailing, paint protection, mobile wash, and
@@ -116,7 +116,7 @@ export default function Layout({ children }) {
               <h4>Booking</h4>
               <p>Islamabad and Rawalpindi</p>
               <p>Phone: +92 300 0000000</p>
-              <p>Email: info@crystalcarwash.pk</p>
+              <p>Email: info@crystalcarcare.pk</p>
               <Link href="/contact" className="footer-book">
                 Request a booking
               </Link>
@@ -124,7 +124,7 @@ export default function Layout({ children }) {
           </div>
 
           <div className="copy">
-            © {new Date().getFullYear()} Crystal Car Wash. All rights reserved.
+            © {new Date().getFullYear()} Crystal Car Care. All rights reserved.
           </div>
         </div>
       </footer>

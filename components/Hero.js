@@ -136,7 +136,7 @@ export default function Hero() {
 
             <FadeIn delay={800} duration={1000}>
               <p className="motion-hero-sub">
-                Crystal Car Wash provides car washing, detailing, paint
+                Crystal Car Care provides car washing, detailing, paint
                 protection, doorstep service, monthly packages, and corporate
                 fleet cleaning across Islamabad and Rawalpindi.
               </p>

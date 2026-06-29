@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "../components/Layout";
@@ -16,6 +17,20 @@ const trustItems = [
 ];
 
 export default function Home() {
+  const heroRef = useRef(null);
+  const [pastHero, setPastHero] = useState(false);
+
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastHero(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -26,12 +41,19 @@ export default function Home() {
         />
       </Head>
 
-      <Hero />
+      {/* Sentinel at the bottom of the hero to detect when it leaves view */}
+      <div ref={heroRef}>
+        <Hero />
+      </div>
 
-      {/* Mobile-only CTA row — appears right below the hero */}
-      <div className="hero-mobile-cta">
-        <Link href="/contact" className="btn btn-primary">Book Now</Link>
-        <Link href="/services" className="btn btn-secondary">Our Services</Link>
+      {/* Mobile sticky CTA — fixed at bottom only after hero scrolls away */}
+      <div className={`mobile-sticky-cta${pastHero ? " is-visible" : ""}`}>
+        <Link href="/contact" className="mobile-sticky-btn mobile-sticky-btn--primary">
+          Book Now
+        </Link>
+        <Link href="/services" className="mobile-sticky-btn mobile-sticky-btn--secondary">
+          Our Services
+        </Link>
       </div>
 
       <section className="trust-section">

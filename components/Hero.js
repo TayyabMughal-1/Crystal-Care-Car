@@ -114,7 +114,7 @@ export default function Hero() {
           <video
             ref={videoRef}
             className={`motion-hero-video ${videoReady ? "is-ready" : ""}`}
-            src="/videos/hero.mp4"
+            src="https://res.cloudinary.com/dtwihjzyn/video/upload/v1782731105/hero_jozywg.mp4"
             poster={POSTER_IMAGE}
             autoPlay
             muted

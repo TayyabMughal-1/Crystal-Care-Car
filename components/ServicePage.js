@@ -26,6 +26,7 @@ export default function ServicePage({ service }) {
         title={service.title}
         description={service.short}
         image={service.image}
+        video="https://res.cloudinary.com/dtwihjzyn/video/upload/services_ixuxih"
       />
 
       <section>

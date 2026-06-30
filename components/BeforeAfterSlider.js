@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const BEFORE =
-  "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=90";
+  "https://res.cloudinary.com/dtwihjzyn/image/upload/v1782805853/1_tbh7xd.jpg";
 const AFTER =
-  "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&q=90";
+  "https://res.cloudinary.com/dtwihjzyn/image/upload/v1782805853/2_qnkwuo.jpg";
 
 const RADIUS = 100;
 const LIFETIME = 2800;
@@ -21,6 +21,13 @@ export default function BeforeAfterSlider() {
   const [interactive, setInteractive] = useState(false);
   const [hasWiped, setHasWiped] = useState(false);
   const [size, setSize] = useState({ w: 1, h: 1 });
+  const [afterNat, setAfterNat] = useState(null);
+
+  useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => setAfterNat({ w: img.naturalWidth, h: img.naturalHeight });
+    img.src = AFTER;
+  }, []);
 
   useEffect(() => {
     const reduced = window.matchMedia(
@@ -124,26 +131,36 @@ export default function BeforeAfterSlider() {
         />
         <div className="cc-dirty-effect" />
 
-        {/* AFTER — wipe patches follow cursor */}
+        {/* AFTER — wipe patches follow cursor, sized to match contain rendering */}
         {interactive &&
-          patches.map((p) => (
-            <div
-              key={p.id}
-              className="cc-wipe-patch"
-              style={{
-                left: p.x,
-                top: p.y,
-                width: RADIUS * 2,
-                height: RADIUS * 2,
-                opacity: p.opacity,
-                backgroundImage: `url('${AFTER}')`,
-                backgroundSize: `${size.w}px ${size.h}px`,
-                backgroundPosition: `${-(p.x - RADIUS)}px ${-(p.y - RADIUS)}px`,
-                WebkitMaskImage: MASK,
-                maskImage: MASK,
-              }}
-            />
-          ))}
+          patches.map((p) => {
+            let bgW = size.w, bgH = size.h, bgOffX = 0, bgOffY = 0;
+            if (afterNat) {
+              const scale = Math.max(size.w / afterNat.w, size.h / afterNat.h);
+              bgW = afterNat.w * scale;
+              bgH = afterNat.h * scale;
+              bgOffX = (size.w - bgW) / 2;
+              bgOffY = (size.h - bgH) / 2;
+            }
+            return (
+              <div
+                key={p.id}
+                className="cc-wipe-patch"
+                style={{
+                  left: p.x,
+                  top: p.y,
+                  width: RADIUS * 2,
+                  height: RADIUS * 2,
+                  opacity: p.opacity,
+                  backgroundImage: `url('${AFTER}')`,
+                  backgroundSize: `${bgW}px ${bgH}px`,
+                  backgroundPosition: `${bgOffX - (p.x - RADIUS)}px ${bgOffY - (p.y - RADIUS)}px`,
+                  WebkitMaskImage: MASK,
+                  maskImage: MASK,
+                }}
+              />
+            );
+          })}
 
         {/* Static after for reduced-motion / no-JS */}
         {!interactive && (

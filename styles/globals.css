@@ -1596,6 +1596,9 @@ p.motion-hero-sub {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -2331,10 +2334,11 @@ p.motion-hero-sub {
   height: 560px;
   border-radius: 22px;
   overflow: hidden;
-  background: var(--bg-soft);
-  border: 1px solid var(--line);
+  background: #ffffff;
   cursor: none;
   user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .cc-wipe-frame.is-static {
@@ -2365,6 +2369,29 @@ p.motion-hero-sub {
   transform: translate(-50%, -50%);
   pointer-events: none;
   filter: brightness(1.06) contrast(1.1) saturate(1.2);
+}
+
+.cc-wipe-label {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 999px;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+.cc-wipe-frame.has-wiped .cc-wipe-label {
+  opacity: 0;
 }
 
 /* Custom cursor ring */
@@ -2428,29 +2455,68 @@ p.motion-hero-sub {
 /* Mobile */
 @media (max-width: 760px) {
   .cc-transform-card {
-    padding: 18px;
-    border-radius: 24px;
+    padding: 16px;
+    border-radius: 20px;
   }
 
   .cc-transform-head {
     display: block;
+    margin-bottom: 16px;
+  }
+
+  .cc-transform-head h3 {
+    font-size: clamp(20px, 5.5vw, 28px);
   }
 
   .cc-transform-head p {
     max-width: none;
+    font-size: 14px;
   }
 
   .cc-result-badge {
     display: inline-flex;
-    margin-top: 14px;
+    margin-top: 12px;
+    font-size: 11px;
+    padding: 8px 14px;
   }
 
   .cc-wipe-frame {
-    height: 320px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: 320px;
+    border-radius: 16px;
+    cursor: auto;
+  }
+
+
+  .cc-wipe-label {
+    font-size: 13px;
+    padding: 8px 16px;
+    bottom: 14px;
+    letter-spacing: 0.04em;
   }
 
   .cc-result-row {
     grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .cc-result-row > div {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cc-result-row strong {
+    font-size: 14px;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .cc-result-row small {
+    font-size: 13px;
   }
 }
 

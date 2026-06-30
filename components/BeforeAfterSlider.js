@@ -22,6 +22,7 @@ export default function BeforeAfterSlider() {
   const [hasWiped, setHasWiped] = useState(false);
   const [size, setSize] = useState({ w: 1, h: 1 });
   const [afterNat, setAfterNat] = useState(null);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
     const img = new window.Image();
@@ -30,6 +31,7 @@ export default function BeforeAfterSlider() {
   }, []);
 
   useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -92,10 +94,18 @@ export default function BeforeAfterSlider() {
     if (!hasWiped) setHasWiped(true);
   };
 
+  const radius = isTouch ? 130 : 100;
+
   const onMouseMove = (e) => {
     if (interactive) addPoint(e.clientX, e.clientY);
   };
+  const onTouchStart = (e) => {
+    e.preventDefault();
+    if (interactive && e.touches[0])
+      addPoint(e.touches[0].clientX, e.touches[0].clientY);
+  };
   const onTouchMove = (e) => {
+    e.preventDefault();
     if (interactive && e.touches[0])
       addPoint(e.touches[0].clientX, e.touches[0].clientY);
   };
@@ -120,6 +130,7 @@ export default function BeforeAfterSlider() {
         ref={frameRef}
         className={`cc-wipe-frame${hasWiped ? " has-wiped" : ""}${interactive ? "" : " is-static"}`}
         onMouseMove={onMouseMove}
+        onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         aria-label="Move cursor or swipe to reveal the clean car"
       >
@@ -131,7 +142,7 @@ export default function BeforeAfterSlider() {
         />
         <div className="cc-dirty-effect" />
 
-        {/* AFTER — wipe patches follow cursor, sized to match contain rendering */}
+        {/* AFTER — wipe patches follow cursor/touch */}
         {interactive &&
           patches.map((p) => {
             let bgW = size.w, bgH = size.h, bgOffX = 0, bgOffY = 0;
@@ -149,12 +160,12 @@ export default function BeforeAfterSlider() {
                 style={{
                   left: p.x,
                   top: p.y,
-                  width: RADIUS * 2,
-                  height: RADIUS * 2,
+                  width: radius * 2,
+                  height: radius * 2,
                   opacity: p.opacity,
                   backgroundImage: `url('${AFTER}')`,
                   backgroundSize: `${bgW}px ${bgH}px`,
-                  backgroundPosition: `${bgOffX - (p.x - RADIUS)}px ${bgOffY - (p.y - RADIUS)}px`,
+                  backgroundPosition: `${bgOffX - (p.x - radius)}px ${bgOffY - (p.y - radius)}px`,
                   WebkitMaskImage: MASK,
                   maskImage: MASK,
                 }}
@@ -175,11 +186,15 @@ export default function BeforeAfterSlider() {
 
         {/* Hint label — fades once user starts wiping */}
         <span className="cc-wipe-label">
-          {interactive ? "Move your cursor to reveal" : "Before → After"}
+          {interactive
+            ? isTouch
+              ? "Touch & drag to reveal"
+              : "Move your cursor to reveal"
+            : "Before → After"}
         </span>
 
-        {/* Custom cursor ring */}
-        {interactive && (
+        {/* Custom cursor ring — desktop only */}
+        {interactive && !isTouch && (
           <div
             className="cc-cursor-ring"
             style={{ left: "var(--cx, -999px)", top: "var(--cy, -999px)" }}

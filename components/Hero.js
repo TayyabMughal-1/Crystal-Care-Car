@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-
-const POSTER_IMAGE =
-  "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1800&q=80";
+import { useEffect, useState } from "react";
 
 function FadeIn({ delay = 0, duration = 800, className = "", children }) {
   const [visible, setVisible] = useState(false);
@@ -70,9 +67,7 @@ function AnimatedHeading({ text, charDelay = 30, startDelay = 200 }) {
 }
 
 export default function Hero() {
-  const videoRef = useRef(null);
   const [allowVideo, setAllowVideo] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia(
@@ -81,47 +76,18 @@ export default function Hero() {
     setAllowVideo(!reduceMotion);
   }, []);
 
-  useEffect(() => {
-    if (!allowVideo || !videoRef.current) return;
-    const video = videoRef.current;
-
-    const tryPlay = () => {
-      video.play().catch(() => {
-        // Autoplay can be blocked by the browser; the poster image
-        // remains visible as a safe fallback in that case.
-      });
-    };
-
-    if (video.readyState >= 2) {
-      tryPlay();
-    } else {
-      video.addEventListener("loadeddata", tryPlay, { once: true });
-    }
-
-    return () => video.removeEventListener("loadeddata", tryPlay);
-  }, [allowVideo]);
-
   return (
     <section className="hero motion-hero">
       <div className="motion-hero-backdrops">
-        <img
-          src={POSTER_IMAGE}
-          alt=""
-          className="motion-hero-poster"
-          aria-hidden="true"
-        />
         {allowVideo && (
           <video
-            ref={videoRef}
-            className={`motion-hero-video ${videoReady ? "is-ready" : ""}`}
+            className="motion-hero-video"
             src="https://res.cloudinary.com/dtwihjzyn/video/upload/v1782731105/hero_jozywg.mp4"
-            poster={POSTER_IMAGE}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
-            onCanPlay={() => setVideoReady(true)}
             aria-hidden="true"
           />
         )}

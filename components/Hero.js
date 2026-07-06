@@ -1,41 +1,47 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
+const HERO_VIDEO =
+  "https://res.cloudinary.com/dtwihjzyn/video/upload/q_auto,f_auto,w_1280/v1782731105/hero_jozywg.mp4";
+const HERO_POSTER =
+  "https://res.cloudinary.com/dtwihjzyn/video/upload/so_0,q_auto,f_jpg,w_1280/v1782731105/hero_jozywg.jpg";
+
 export default function Hero() {
-  const [allowVideo, setAllowVideo] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setAllowVideo(!reduceMotion);
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduceMotion && videoRef.current) {
+      videoRef.current.pause();
+    }
   }, []);
 
   return (
     <section className="hero motion-hero">
       <div className="motion-hero-backdrops">
-        {allowVideo && (
-          <video
-            className="motion-hero-video"
-            src="https://res.cloudinary.com/dtwihjzyn/video/upload/v1782731105/hero_jozywg.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-          />
-        )}
+        <video
+          ref={videoRef}
+          className="motion-hero-video"
+          src={HERO_VIDEO}
+          poster={HERO_POSTER}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        />
       </div>
 
       <div className="container motion-hero-inner">
-        <motion.h1
-          className="hero-heading"
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Real shine for cars<br />that deserve better care.
-        </motion.h1>
+        <h1 className="hero-heading">
+          Real shine for cars
+          <br />
+          that deserve better care.
+        </h1>
 
         <motion.p
           className="motion-hero-sub"
@@ -43,9 +49,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.18, ease: "easeOut" }}
         >
-          Crystal Car Care provides car washing, detailing, paint
-          protection, doorstep service, monthly packages, and corporate
-          fleet cleaning across Islamabad and Rawalpindi.
+          Crystal Car Care provides car washing, detailing, paint protection,
+          doorstep service, monthly packages, and corporate fleet cleaning
+          across Islamabad and Rawalpindi.
         </motion.p>
 
         <motion.div
@@ -54,8 +60,12 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.32, ease: "easeOut" }}
         >
-          <Link href="/contact" className="btn btn-primary">Book a Wash</Link>
-          <Link href="/services" className="motion-glass-btn">Explore Services</Link>
+          <Link href="/contact" className="btn btn-primary">
+            Book a Wash
+          </Link>
+          <Link href="/services" className="motion-glass-btn">
+            Explore Services
+          </Link>
         </motion.div>
       </div>
     </section>

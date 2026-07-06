@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function ServiceCard({ service, linkLabel = "View service" }) {
@@ -15,7 +16,13 @@ export default function ServiceCard({ service, linkLabel = "View service" }) {
         className="card-image-link"
         aria-label={`View ${service.title}`}
       >
-        <img src={service.image} alt={service.title} loading="lazy" decoding="async" />
+        <Image
+          src={service.image}
+          alt={service.title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="lazy"
+        />
         <span className="card-badge">{service.category}</span>
       </Link>
 

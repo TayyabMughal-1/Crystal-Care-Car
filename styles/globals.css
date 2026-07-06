@@ -29,6 +29,18 @@ html {
   scroll-behavior: smooth;
 }
 
+.font-root {
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", Arial, sans-serif;
+  font-family:
+    var(--font-barlow),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
 body {
   margin: 0;
   font-family:
@@ -388,8 +400,6 @@ section {
 }
 
 .card img {
-  width: 100%;
-  height: 220px;
   object-fit: cover;
 }
 
@@ -1524,7 +1534,7 @@ section {
     grid-template-columns: 1fr;
   }
 
-  .card img {
+  .card-image-link {
     height: 190px;
   }
 }
@@ -1816,6 +1826,7 @@ p.motion-hero-sub {
   position: relative;
   overflow: hidden;
   border-radius: 22px;
+  height: 220px;
 }
 
 .card-image-link img {

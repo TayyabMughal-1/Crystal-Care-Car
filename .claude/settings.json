@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /tmp)",
+      "Bash(curl -sI \"https://res.cloudinary.com/dtwihjzyn/video/upload/so_0,q_auto,f_jpg,w_1280/v1782731105/hero_jozywg.jpg\")",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3456/)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(command -v chromium-cli)",
+      "Bash(npx --yes chromium-cli --help)",
+      "Bash(rm -f /tmp/test_hero_960.mp4 /tmp/test_hero_1280.mp4 /tmp/test_hero_1600.mp4)",
+      "Bash(pkill -f \"next start\")",
+      "Bash(pkill -f \"PORT=3456\")"
+    ]
+  }
+}

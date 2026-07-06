@@ -15,7 +15,7 @@ export default function ServiceCard({ service, linkLabel = "View service" }) {
         className="card-image-link"
         aria-label={`View ${service.title}`}
       >
-        <img src={service.image} alt={service.title} />
+        <img src={service.image} alt={service.title} loading="lazy" decoding="async" />
         <span className="card-badge">{service.category}</span>
       </Link>
 

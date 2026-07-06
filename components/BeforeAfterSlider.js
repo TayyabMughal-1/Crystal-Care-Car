@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const BEFORE =
-  "https://res.cloudinary.com/dtwihjzyn/image/upload/v1782805853/1_tbh7xd.jpg";
+  "https://res.cloudinary.com/dtwihjzyn/image/upload/f_auto,q_auto,w_1200/v1782805853/1_tbh7xd.jpg";
 const AFTER =
-  "https://res.cloudinary.com/dtwihjzyn/image/upload/v1782805853/2_qnkwuo.jpg";
+  "https://res.cloudinary.com/dtwihjzyn/image/upload/f_auto,q_auto,w_1200/v1782805853/2_qnkwuo.jpg";
 
 const RADIUS = 100;
 const LIFETIME = 2800;

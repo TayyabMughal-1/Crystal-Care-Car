@@ -70,20 +70,6 @@ const PLANS = [
   },
 ];
 
-const COMPARE_ROWS = [
-  { feature: "Exterior Car Wash",         weekly: true,  monthly: true,  family: true  },
-  { feature: "Interior Vacuuming",        weekly: true,  monthly: true,  family: true  },
-  { feature: "Glass Cleaning",            weekly: true,  monthly: true,  family: true  },
-  { feature: "Tire Rinse",               weekly: true,  monthly: false, family: true  },
-  { feature: "Tire & Rim Detailing",      weekly: false, monthly: true,  family: true  },
-  { feature: "Dashboard Wipe",            weekly: false, monthly: true,  family: true  },
-  { feature: "Interior Deep Cleaning",    weekly: false, monthly: false, family: true  },
-  { feature: "Multiple Vehicles (3)",     weekly: false, monthly: false, family: true  },
-  { feature: "Dedicated Service Team",    weekly: false, monthly: false, family: true  },
-  { feature: "Free Rescheduling",         weekly: false, monthly: true,  family: true  },
-  { feature: "Priority Booking",          weekly: true,  monthly: true,  family: true  },
-  { feature: "Flexible Time Slots",       weekly: true,  monthly: true,  family: true  },
-];
 
 const WHY = [
   {
@@ -148,17 +134,6 @@ function Cross() {
   );
 }
 
-function TableCheck({ yes }) {
-  return yes ? (
-    <svg viewBox="0 0 20 20" fill="none" width="20" height="20">
-      <path d="M4 10.5l4.5 4.5 7.5-9" stroke="#1bb89e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  ) : (
-    <svg viewBox="0 0 20 20" fill="none" width="20" height="20">
-      <path d="M6 6l8 8M14 6l-8 8" stroke="#c5cad2" strokeWidth="1.8" strokeLinecap="round"/>
-    </svg>
-  );
-}
 
 export default function Packages() {
   return (
@@ -276,59 +251,6 @@ export default function Packages() {
             SUVs, vans, and larger vehicles may vary.{" "}
             <Link href="/contact">Contact us</Link> for a custom quote.
           </p>
-        </div>
-      </section>
-
-      {/* Comparison Table */}
-      <section style={{ background: "var(--bg-soft)" }}>
-        <div className="container">
-          <motion.div
-            className="section-head"
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
-            variants={fadeUp}
-          >
-            <div>
-              <span className="eyebrow">Compare Plans</span>
-              <h2 style={{ marginTop: 10 }}>What&apos;s included</h2>
-            </div>
-            <p>A side-by-side breakdown of every feature across all three plans.</p>
-          </motion.div>
-
-          <motion.div
-            className="pkg-table-wrap"
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}
-            variants={fadeUp}
-          >
-            <table className="pkg-table">
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  <th>
-                    Weekly Wash
-                    <span>PKR 3,500</span>
-                  </th>
-                  <th className="pkg-table-featured">
-                    Monthly Wash
-                    <span>PKR 2,200</span>
-                  </th>
-                  <th>
-                    Family Plan
-                    <span>PKR 5,800</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARE_ROWS.map((row) => (
-                  <tr key={row.feature}>
-                    <td>{row.feature}</td>
-                    <td><TableCheck yes={row.weekly} /></td>
-                    <td className="pkg-table-featured"><TableCheck yes={row.monthly} /></td>
-                    <td><TableCheck yes={row.family} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
         </div>
       </section>
 

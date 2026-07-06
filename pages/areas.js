@@ -39,9 +39,11 @@ export default function Areas() {
             {/* Left — photo */}
             <div className="area-overview-img-wrap">
               <img
-                src="https://images.unsplash.com/photo-1565689876697-e467b6c54da2?auto=format&fit=crop&w=800&q=90"
+                src="https://images.unsplash.com/photo-1565689876697-e467b6c54da2?auto=format&fit=crop&w=800&q=80"
                 alt="Crystal Car Care professional car wash service"
                 className="area-overview-img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
 

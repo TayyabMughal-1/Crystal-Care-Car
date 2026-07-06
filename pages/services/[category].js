@@ -18,12 +18,12 @@ const CATEGORY_META = {
   },
   paint: {
     desc: 'Ceramic, wax and sealant protection for lasting shine',
-    color: '#c9a85c',
+    color: '#1bb89e',
     image: 'https://images.unsplash.com/photo-1619405399517-d7fce0f13302?auto=format&fit=crop&w=1800&q=80',
   },
   restore: {
     desc: 'Restore headlights and surfaces to like-new condition',
-    color: '#b08d3f',
+    color: '#159a83',
     image: 'https://images.unsplash.com/photo-1617814076668-cc1e9f5fc955?auto=format&fit=crop&w=1800&q=80',
   },
   packages: {

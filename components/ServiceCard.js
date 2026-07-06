@@ -1,8 +1,15 @@
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function ServiceCard({ service, linkLabel = "View service" }) {
   return (
-    <article className="card reveal-card">
+    <motion.article
+      className="card"
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+    >
       <Link
         href={`/services/${service.slug}`}
         className="card-image-link"
@@ -19,6 +26,6 @@ export default function ServiceCard({ service, linkLabel = "View service" }) {
           {linkLabel} <span>→</span>
         </Link>
       </div>
-    </article>
+    </motion.article>
   );
 }

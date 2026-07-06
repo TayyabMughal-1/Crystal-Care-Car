@@ -27,57 +27,71 @@ export default function Areas() {
       <PageHero
         title="Service Areas"
         description="Crystal Car Care serves car owners, homes, offices, and corporate clients in Islamabad and Rawalpindi."
-        image="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?auto=format&fit=crop&w=1800&q=80"
+        image="https://images.unsplash.com/photo-1608020932658-d0e19a69580b?auto=format&fit=crop&w=1800&q=80"
+        bgPosition="center 60%"
       />
 
-      {/* Coverage intro */}
-      <section>
+      {/* Coverage intro — reference layout */}
+      <section className="area-overview-section">
         <div className="container">
-          <div className="split enhanced-split">
-            <div>
-              <span className="eyebrow">Where We Operate</span>
-              <h2 className="xl-title">
-                Covering every corner of Islamabad &amp; Rawalpindi
-              </h2>
-              <p className="lead-text">
-                We bring professional car washing, detailing, and paint
-                protection directly to your home, office, or preferred location
-                — no travel required on your part.
-              </p>
-              <ul className="feature-list" style={{ marginTop: 28 }}>
-                <li>Doorstep and mobile service across all listed areas</li>
-                <li>Corporate fleet cleaning at your office premises</li>
-                <li>Flexible scheduling — morning, afternoon, or evening</li>
-                <li>New areas added on request — contact us to confirm</li>
-              </ul>
-              <div className="actions" style={{ marginTop: 32 }}>
-                <Link href="/contact" className="btn btn-primary">
-                  📍 Book at My Location
-                </Link>
-                <Link href="/services" className="btn btn-secondary">
-                  View Services
-                </Link>
-              </div>
+          <div className="area-overview-grid">
+
+            {/* Left — photo */}
+            <div className="area-overview-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1565689876697-e467b6c54da2?auto=format&fit=crop&w=800&q=90"
+                alt="Crystal Car Care professional car wash service"
+                className="area-overview-img"
+              />
             </div>
 
-            <div>
-              <div className="process-showcase">
-                <span className="eyebrow">Quick Facts</span>
-                <div style={{ marginTop: 20, display: "grid", gap: 14 }}>
-                  {[
-                    { label: "Cities Covered",  value: "2 Cities" },
-                    { label: "Areas Served",    value: "8+ Zones" },
-                    { label: "Service Type",    value: "Doorstep & Mobile" },
-                    { label: "Booking",         value: "Same Day Available" },
-                  ].map((f) => (
-                    <div key={f.label} className="area-fact-row">
-                      <span>{f.label}</span>
-                      <strong>{f.value}</strong>
-                    </div>
-                  ))}
+            {/* Right — content */}
+            <div className="area-overview-content">
+              <span className="eyebrow">Location Overview</span>
+              <h2 className="area-overview-heading">
+                Crystal Car Care across Islamabad &amp; Rawalpindi
+              </h2>
+              <p className="area-overview-desc">
+                From doorstep washing to corporate fleet cleaning, Crystal Car
+                Care is always nearby — ready to bring professional care
+                directly to your location.
+              </p>
+
+              {/* Stat boxes */}
+              <div className="area-overview-boxes">
+                <div className="area-box area-box--dark">
+                  <span className="area-box-stat">8+</span>
+                  <span className="area-box-label">Service Zones</span>
+                </div>
+                <div className="area-box area-box--light">
+                  <span className="area-box-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <strong>Mobile Coverage</strong>
+                    <p>We bring detailing to you, wherever you are.</p>
+                  </div>
+                </div>
+                <div className="area-box area-box--light">
+                  <span className="area-box-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <strong>Flexible Hours</strong>
+                    <p>Flexible slots to match your busy schedule.</p>
+                  </div>
                 </div>
               </div>
+
+              <Link href="/contact" className="btn btn-primary" style={{ marginTop: 28, display: 'inline-flex' }}>
+                Find My Area
+              </Link>
             </div>
+
           </div>
         </div>
       </section>

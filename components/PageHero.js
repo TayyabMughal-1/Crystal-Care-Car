@@ -4,6 +4,7 @@ export default function PageHero({
   description,
   image,
   video,
+  bgPosition = "center",
 }) {
   if (video) {
     return (
@@ -34,7 +35,10 @@ export default function PageHero({
   }
 
   return (
-    <section className="page-hero" style={{ "--page-image": `url(${image})` }}>
+    <section
+      className="page-hero"
+      style={{ "--page-image": `url(${image})`, "--page-image-pos": bgPosition }}
+    >
       <div className="container">
         <div className="breadcrumbs">{eyebrow}</div>
         <h1>{title}</h1>

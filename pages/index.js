@@ -12,7 +12,7 @@ const featuredServices = services.slice(0, 6);
 
 const trustItems = [
   { stat: "500+", label: "Cars Washed Monthly" },
-  { stat: "5★",   label: "Rated Service" },
+  { stat: "4.9★", label: "Rated Service" },
   { stat: "2 Cities", label: "Islamabad & Rawalpindi" },
   { stat: "100%", label: "Satisfaction Guarantee" },
 ];

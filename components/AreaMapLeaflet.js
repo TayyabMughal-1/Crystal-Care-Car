@@ -89,12 +89,6 @@ export default function AreaMapLeaflet({ onBook }) {
         </div>
       )}
 
-      {/* Hint shown when nothing is selected */}
-      {!selected && (
-        <div className="lf-hint">
-          <span>📍 Click any marker to see details</span>
-        </div>
-      )}
     </div>
   )
 }

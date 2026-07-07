@@ -5,6 +5,7 @@ export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false)
   const [location, setLocation] = useState('')
   const [locStatus, setLocStatus] = useState('idle') // idle | loading | done | denied
+  const [service, setService] = useState('')
 
   useEffect(() => {
     const saved = sessionStorage.getItem('prefill_location')
@@ -12,6 +13,12 @@ export default function BookingForm() {
       setLocation(saved)
       setLocStatus('done')
       sessionStorage.removeItem('prefill_location')
+    }
+
+    const savedService = sessionStorage.getItem('prefill_service')
+    if (savedService) {
+      setService(savedService)
+      sessionStorage.removeItem('prefill_service')
     }
   }, [])
 
@@ -91,7 +98,13 @@ export default function BookingForm() {
 
         <div className="field">
           <label htmlFor="bf-service">Service</label>
-          <select id="bf-service" name="service" defaultValue="" required>
+          <select
+            id="bf-service"
+            name="service"
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            required
+          >
             <option value="" disabled>Select a service</option>
             {services.map((s) => (
               <option value={s.slug} key={s.slug}>{s.title}</option>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-export default function ServiceCard({ service, linkLabel = "View service" }) {
+export default function ServiceCard({ service, linkLabel = "View Details" }) {
   return (
     <motion.article
       className="card"
@@ -29,9 +29,18 @@ export default function ServiceCard({ service, linkLabel = "View service" }) {
       <div className="card-body">
         <h3>{service.title}</h3>
         <p>{service.short}</p>
-        <Link className="card-link" href={`/services/${service.slug}`}>
-          {linkLabel} <span>→</span>
-        </Link>
+        <div className="card-actions">
+          <Link className="card-link" href={`/services/${service.slug}`}>
+            {linkLabel} <span>→</span>
+          </Link>
+          <Link
+            className="card-book-btn"
+            href="/contact"
+            onClick={() => sessionStorage.setItem("prefill_service", service.slug)}
+          >
+            Book Now
+          </Link>
+        </div>
       </div>
     </motion.article>
   );

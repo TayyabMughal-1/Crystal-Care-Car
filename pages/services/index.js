@@ -141,7 +141,7 @@ export default function ServicesIndex() {
                       <h3 className="svc-photo-title">{cat.title}</h3>
                       <p className="svc-photo-desc">{meta.desc}</p>
                       <span className="svc-photo-cta">
-                        Read More <span className="svc-photo-arrow">→</span>
+                        View All Services <span className="svc-photo-arrow">→</span>
                       </span>
                     </div>
                   </Link>

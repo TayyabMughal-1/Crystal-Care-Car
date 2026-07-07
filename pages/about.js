@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import Layout from "../components/Layout";
 import PageHero from "../components/PageHero";
 
@@ -45,13 +46,17 @@ export default function About() {
             </ul>
           </div>
           <div className="photo-stack">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1605515298946-d062f2e9da53?auto=format&fit=crop&w=1200&q=80"
               alt="Car interior detailing"
+              width={800}
+              height={600}
             />
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80"
               alt="Clean luxury car"
+              width={800}
+              height={600}
             />
           </div>
         </div>

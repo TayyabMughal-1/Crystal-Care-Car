@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
@@ -38,12 +39,12 @@ export default function Areas() {
 
             {/* Left — photo */}
             <div className="area-overview-img-wrap">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1565689876697-e467b6c54da2?auto=format&fit=crop&w=800&q=80"
                 alt="Crystal Car Care professional car wash service"
                 className="area-overview-img"
-                loading="lazy"
-                decoding="async"
+                width={800}
+                height={500}
               />
             </div>
 

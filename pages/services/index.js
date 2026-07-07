@@ -103,8 +103,8 @@ export default function ServicesIndex() {
         eyebrow="Crystal Car Care"
         title="Our Services"
         description="Choose a category below to explore the services we offer across Islamabad and Rawalpindi."
-        image="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1800&q=80"
-        video="https://res.cloudinary.com/dtwihjzyn/video/upload/services_ixuxih"
+        image="https://res.cloudinary.com/dtwihjzyn/video/upload/so_0,q_auto,f_jpg,w_1280/services_ixuxih.jpg"
+        video="https://res.cloudinary.com/dtwihjzyn/video/upload/q_auto,f_auto,w_1280/services_ixuxih.mp4"
       />
 
       <section className="svc-photo-section">

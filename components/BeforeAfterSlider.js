@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const BEFORE =
   "https://res.cloudinary.com/dtwihjzyn/image/upload/f_auto,q_auto,w_1200/v1782805853/1_tbh7xd.jpg";
@@ -135,10 +136,12 @@ export default function BeforeAfterSlider() {
         aria-label="Move cursor or swipe to reveal the clean car"
       >
         {/* BEFORE — base layer */}
-        <img
+        <Image
           className="cc-wipe-img cc-wipe-before"
           src={BEFORE}
           alt="Car before detailing"
+          fill
+          sizes="(max-width: 768px) 100vw, 900px"
         />
         <div className="cc-dirty-effect" />
 
@@ -176,10 +179,12 @@ export default function BeforeAfterSlider() {
         {/* Static after for reduced-motion / no-JS */}
         {!interactive && (
           <div className="cc-wipe-static-after">
-            <img
+            <Image
               src={AFTER}
               alt="Car after detailing"
               className="cc-wipe-img"
+              fill
+              sizes="(max-width: 768px) 100vw, 900px"
             />
           </div>
         )}

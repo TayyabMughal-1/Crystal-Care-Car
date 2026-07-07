@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function PageHero({
   eyebrow = "Crystal Car Care",
   title,
@@ -5,11 +7,12 @@ export default function PageHero({
   image,
   video,
   bgPosition = "center",
+  children,
 }) {
-  if (video) {
-    return (
-      <section className="page-hero page-hero--video">
-        <div className="page-hero-media">
+  return (
+    <section className="page-hero">
+      <div className="page-hero-media">
+        {video ? (
           <video
             className="page-hero-video"
             autoPlay
@@ -22,27 +25,24 @@ export default function PageHero({
           >
             <source src={video} type="video/mp4" />
           </video>
-          <div className="page-hero-overlay" />
-        </div>
+        ) : (
+          <Image
+            src={image}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: "cover", objectPosition: bgPosition }}
+          />
+        )}
+      </div>
+      <div className="page-hero-overlay" />
 
-        <div className="container page-hero-content">
-          <div className="breadcrumbs">{eyebrow}</div>
-          <h1>{title}</h1>
-          <p>{description}</p>
-        </div>
-      </section>
-    );
-  }
-
-  return (
-    <section
-      className="page-hero"
-      style={{ "--page-image": `url(${image})`, "--page-image-pos": bgPosition }}
-    >
-      <div className="container">
+      <div className="container page-hero-content">
         <div className="breadcrumbs">{eyebrow}</div>
         <h1>{title}</h1>
         <p>{description}</p>
+        {children}
       </div>
     </section>
   );

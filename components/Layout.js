@@ -112,6 +112,7 @@ export default function Layout({ children }) {
               <div className="footer-links">
                 <Link href="/about">About</Link>
                 <Link href="/areas">Service Areas</Link>
+                <Link href="/gallery">Gallery</Link>
                 <Link href="/contact">Contact</Link>
               </div>
             </div>
@@ -132,6 +133,7 @@ export default function Layout({ children }) {
               <p>Islamabad and Rawalpindi</p>
               <p>Phone: +92 300 0000000</p>
               <p>Email: info@crystalcarcare.pk</p>
+              <span className="footer-hours-badge">Mon - Sat: 8:00 AM - 6:00 PM</span>
               <Link href="/contact" className="footer-book">
                 Request a booking
               </Link>

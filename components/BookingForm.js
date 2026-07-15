@@ -96,7 +96,7 @@ export default function BookingForm() {
           />
         </div>
 
-        <div className="field">
+        <div className="field full">
           <label htmlFor="bf-service">Service</label>
           <select
             id="bf-service"
@@ -109,6 +109,20 @@ export default function BookingForm() {
             {services.map((s) => (
               <option value={s.slug} key={s.slug}>{s.title}</option>
             ))}
+          </select>
+        </div>
+
+        <div className="field">
+          <label htmlFor="bf-car-type">Car Type</label>
+          <select id="bf-car-type" name="carType" defaultValue="" required>
+            <option value="" disabled>Select car type</option>
+            <option>Mini / Compact</option>
+            <option>Hatchback</option>
+            <option>Sedan</option>
+            <option>Coupe</option>
+            <option>SUV / Crossover</option>
+            <option>Van / Pickup</option>
+            <option>Other</option>
           </select>
         </div>
 

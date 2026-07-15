@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import Hero from "../components/Hero";
 import ServiceCard from "../components/ServiceCard";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
+import Testimonials from "../components/Testimonials";
 import { services } from "../data/services";
 
 const featuredServices = services.slice(0, 6);
@@ -174,6 +175,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
 
       {/* CTA */}
       <section className="section-tight final-booking-section">

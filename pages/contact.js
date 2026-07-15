@@ -20,15 +20,27 @@ export default function Contact() {
       />
       <section>
         <div className="container grid-2">
-          <div className="content-panel">
-            <h2>Contact Details</h2>
-            <p>Phone: +92 300 0000000</p>
-            <p>Email: info@crystalcarcare.pk</p>
-            <p>Areas: Islamabad and Rawalpindi</p>
-            <p>
-              Replace these details with the client's final phone number, email,
-              WhatsApp, and address.
-            </p>
+          <div className="contact-info-col">
+            <div className="content-panel">
+              <h2>Contact Details</h2>
+              <p>Phone: +92 300 0000000</p>
+              <p>Email: info@crystalcarcare.pk</p>
+              <p>Areas: Islamabad and Rawalpindi</p>
+            </div>
+
+            <div className="hours-highlight">
+              <span className="hours-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3.5 2" />
+                </svg>
+              </span>
+              <div>
+                <strong>Working Hours</strong>
+                <p>Monday – Saturday</p>
+                <p className="hours-time">8:00 AM – 6:00 PM</p>
+              </div>
+            </div>
           </div>
           <BookingForm />
         </div>

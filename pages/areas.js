@@ -67,26 +67,29 @@ export default function Areas() {
                   <span className="area-box-label">Service Zones</span>
                 </div>
                 <div className="area-box area-box--light">
-                  <span className="area-box-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-                    </svg>
-                  </span>
-                  <div>
+                  <div className="area-box-head">
+                    <span className="area-box-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                      </svg>
+                    </span>
                     <strong>Mobile Coverage</strong>
-                    <p>We bring detailing to you, wherever you are.</p>
                   </div>
+                  <p>We bring detailing to you, wherever you are.</p>
                 </div>
                 <div className="area-box area-box--light">
-                  <span className="area-box-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                  </span>
-                  <div>
-                    <strong>Flexible Hours</strong>
-                    <p>Flexible slots to match your busy schedule.</p>
+                  <div className="area-box-head">
+                    <span className="area-box-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                      </svg>
+                    </span>
+                    <strong>Working Hours</strong>
                   </div>
+                  <p className="area-box-hours">
+                    <span className="area-box-hours-days">Mon - Sat</span>
+                    <span className="area-box-hours-time">8:00 AM - 6:00 PM</span>
+                  </p>
                 </div>
               </div>
 

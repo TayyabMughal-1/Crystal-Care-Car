@@ -1,11 +1,29 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { services } from "../data/services";
 
 export default function Layout({ children }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pillStyle, setPillStyle] = useState({ opacity: 0 });
+  const navRef = useRef(null);
+  const itemRefs = useRef({});
+
+  const movePill = (href) => {
+    const el = itemRefs.current[href];
+    const nav = navRef.current;
+    if (!el || !nav) return;
+    const elRect = el.getBoundingClientRect();
+    const navRect = nav.getBoundingClientRect();
+    setPillStyle({
+      opacity: 1,
+      width: elRect.width,
+      transform: `translateX(${elRect.left - navRect.left}px)`,
+    });
+  };
+
+  const hidePill = () => setPillStyle((s) => ({ ...s, opacity: 0 }));
 
   const featuredServices = services.slice(0, 6);
 
@@ -51,17 +69,22 @@ export default function Layout({ children }) {
           </button>
 
           <nav
+            ref={navRef}
             className={menuOpen ? "nav-links open" : "nav-links"}
             aria-label="Main navigation"
+            onMouseLeave={hidePill}
           >
+            <span className="nav-pill" style={pillStyle} aria-hidden="true" />
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
+                ref={(el) => { itemRefs.current[item.href] = el; }}
                 className={isActive(item.href) ? "active" : ""}
                 onClick={closeMenu}
+                onMouseEnter={() => movePill(item.href)}
               >
-                {item.label}
+                <span className="nav-label">{item.label}</span>
               </Link>
             ))}
             <Link href="/contact" className="nav-cta" onClick={closeMenu}>
@@ -141,7 +164,10 @@ export default function Layout({ children }) {
           </div>
 
           <div className="copy">
-            © {new Date().getFullYear()} Crystal Car Care. All rights reserved.
+            <span>© {new Date().getFullYear()} Crystal Car Care. All rights reserved.</span>
+            <div className="copy-links">
+              <Link href="/terms">Terms &amp; Conditions</Link>
+            </div>
           </div>
         </div>
       </footer>

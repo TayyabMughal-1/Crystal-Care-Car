@@ -213,12 +213,16 @@ export default function Packages() {
                   <span className="pkg-badge" style={{ background: plan.color }}>{plan.badge}</span>
                 )}
                 <div className="pkg-card-top" style={{ "--plan-clr": plan.color }}>
-                  <h3 className="pkg-name">{plan.name}</h3>
-                  <p className="pkg-tagline">{plan.tagline}</p>
-                  <div className="pkg-price">
-                    <span className="pkg-currency">PKR</span>
-                    <span className="pkg-amount">{plan.price.toLocaleString()}</span>
-                    <span className="pkg-period">{plan.period}</span>
+                  <div className="pkg-card-top-left">
+                    <h3 className="pkg-name">{plan.name}</h3>
+                    <p className="pkg-tagline">{plan.tagline}</p>
+                  </div>
+                  <div className="pkg-card-top-right">
+                    <div className="pkg-price">
+                      <span className="pkg-starting">Starting from</span>
+                      <span className="pkg-amount">{plan.price.toLocaleString()}</span>
+                      <span className="pkg-period">{plan.period}</span>
+                    </div>
                   </div>
                 </div>
 

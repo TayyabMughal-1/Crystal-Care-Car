@@ -40,8 +40,15 @@ export default function Testimonials() {
           variants={stagger}
         >
           {testimonials.map((t) => (
-            <motion.figure className="testimonial-card" key={t.name} variants={fadeUp}>
-              <div className="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
+            <motion.figure
+              className="testimonial-card"
+              key={t.name}
+              variants={fadeUp}
+            >
+              <div
+                className="testimonial-stars"
+                aria-label={`${t.rating} out of 5 stars`}
+              >
                 {"★".repeat(t.rating)}
                 {"☆".repeat(5 - t.rating)}
               </div>

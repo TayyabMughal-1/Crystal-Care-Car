@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react'
+import emailjs from '@emailjs/browser'
 import { services } from '../data/services'
+
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
 
 export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
   const [location, setLocation] = useState('')
   const [locStatus, setLocStatus] = useState('idle') // idle | loading | done | denied
   const [service, setService] = useState('')
@@ -45,9 +52,42 @@ export default function BookingForm() {
     )
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    setError('')
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setError('Booking form is not fully configured yet. Please contact us directly on WhatsApp.')
+      return
+    }
+
+    const formData = new FormData(e.target)
+    const serviceTitle =
+      services.find((s) => s.slug === formData.get('service'))?.title ||
+      formData.get('service')
+
+    setSending(true)
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.get('name'),
+          phone: formData.get('phone'),
+          service: serviceTitle,
+          car_type: formData.get('carType'),
+          area: formData.get('area'),
+          location: formData.get('location'),
+          message: formData.get('message'),
+        },
+        EMAILJS_PUBLIC_KEY,
+      )
+      setSubmitted(true)
+    } catch {
+      setError('Something went wrong sending your request. Please try again or contact us on WhatsApp.')
+    } finally {
+      setSending(false)
+    }
   }
 
   if (submitted) {
@@ -190,8 +230,19 @@ export default function BookingForm() {
 
       </div>
 
-      <button type="submit" className="btn btn-primary" style={{ marginTop: 18 }}>
-        Submit Booking Request
+      {error && (
+        <p style={{ color: 'var(--danger)', marginTop: 14, marginBottom: 0 }}>
+          {error}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ marginTop: 18 }}
+        disabled={sending}
+      >
+        {sending ? 'Sending...' : 'Submit Booking Request'}
       </button>
     </form>
   )

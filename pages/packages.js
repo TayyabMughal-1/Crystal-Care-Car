@@ -195,7 +195,6 @@ export default function Packages() {
               <span className="eyebrow">Subscription Plans</span>
               <h2 style={{ marginTop: 10 }}>Choose your plan</h2>
             </div>
-            <p>All prices in PKR. Cancel or change plan anytime with 7-day notice.</p>
           </motion.div>
 
           <motion.div

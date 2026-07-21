@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "framer-motion": "^12.42.2",
     "leaflet": "^1.9.4",
     "next": "14.2.5",

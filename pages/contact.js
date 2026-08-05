@@ -23,7 +23,7 @@ export default function Contact() {
           <div className="contact-info-col">
             <div className="content-panel">
               <h2>Contact Details</h2>
-              <p>Phone: +92 300 0000000</p>
+              <p>Phone: <a href="tel:+923295443907">+92 329 5443907</a></p>
               <p>Email: info@crystalcarcare.pk</p>
               <p>Areas: Islamabad and Rawalpindi</p>
             </div>

@@ -162,7 +162,7 @@ export default function Layout({ children }) {
             <div>
               <h4>Booking</h4>
               <p>Islamabad and Rawalpindi</p>
-              <p>Phone: +92 300 0000000</p>
+              <p>Phone: <a href="tel:+923295443907">+92 329 5443907</a></p>
               <p>Email: info@crystalcarcare.pk</p>
               <span className="footer-hours-badge">
                 Mon - Sat: 8:00 AM - 6:00 PM

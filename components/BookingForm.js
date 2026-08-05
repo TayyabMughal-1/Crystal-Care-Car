@@ -131,7 +131,7 @@ export default function BookingForm() {
             id="bf-phone"
             name="phone"
             type="tel"
-            placeholder="+92 300 0000000"
+            placeholder="+92 329 5443907"
             required
           />
         </div>

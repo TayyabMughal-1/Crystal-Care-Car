@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react'
-import emailjs from '@emailjs/browser'
 import { services } from '../data/services'
 
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
-const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
 
 export default function BookingForm() {
-  const [submitted, setSubmitted] = useState(false)
-  const [sending, setSending] = useState(false)
-  const [error, setError] = useState('')
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [location, setLocation] = useState('')
   const [locStatus, setLocStatus] = useState('idle') // idle | loading | done | denied
   const [service, setService] = useState('')
@@ -54,60 +49,34 @@ export default function BookingForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError('')
-
-    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-      setError('Booking form is not fully configured yet. Please contact us directly on WhatsApp.')
-      return
-    }
-
-    const formData = new FormData(e.target)
+    const form = e.target
+    const formData = new FormData(form)
     const serviceTitle =
       services.find((s) => s.slug === formData.get('service'))?.title ||
       formData.get('service')
+    formData.set('service', serviceTitle)
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY || '')
 
-    setSending(true)
+    setStatus('sending')
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          name: formData.get('name'),
-          phone: formData.get('phone'),
-          service: serviceTitle,
-          car_type: formData.get('carType'),
-          area: formData.get('area'),
-          location: formData.get('location'),
-          message: formData.get('message'),
-        },
-        EMAILJS_PUBLIC_KEY,
-      )
-      setSubmitted(true)
-    } catch {
-      setError('Something went wrong sending your request. Please try again or contact us on WhatsApp.')
-    } finally {
-      setSending(false)
-    }
-  }
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      })
+      const result = await res.json()
 
-  if (submitted) {
-    return (
-      <div className="form-card">
-        <h3 style={{ marginTop: 0 }}>Thanks, request received.</h3>
-        <p style={{ color: 'var(--muted)', lineHeight: 1.7 }}>
-          We will contact you shortly to confirm price and timing. For a faster
-          reply, you can also reach us directly on WhatsApp.
-        </p>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          style={{ marginTop: 18 }}
-          onClick={() => setSubmitted(false)}
-        >
-          Submit another request
-        </button>
-      </div>
-    )
+      if (result.success) {
+        setStatus('sent')
+        form.reset()
+        setService('')
+        setLocation('')
+        setLocStatus('idle')
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -230,9 +199,19 @@ export default function BookingForm() {
 
       </div>
 
-      {error && (
+      {status === 'sending' && (
+        <p style={{ color: 'var(--muted)', marginTop: 14, marginBottom: 0 }}>
+          Sending...
+        </p>
+      )}
+      {status === 'sent' && (
+        <p style={{ color: 'var(--teal)', marginTop: 14, marginBottom: 0 }}>
+          Sent! We will contact you shortly to confirm price and timing.
+        </p>
+      )}
+      {status === 'error' && (
         <p style={{ color: 'var(--danger)', marginTop: 14, marginBottom: 0 }}>
-          {error}
+          Something went wrong sending your request. Please try again or contact us on WhatsApp.
         </p>
       )}
 
@@ -240,9 +219,9 @@ export default function BookingForm() {
         type="submit"
         className="btn btn-primary"
         style={{ marginTop: 18 }}
-        disabled={sending}
+        disabled={status === 'sending'}
       >
-        {sending ? 'Sending...' : 'Submit Booking Request'}
+        {status === 'sending' ? 'Sending...' : 'Submit Booking Request'}
       </button>
     </form>
   )

@@ -6,6 +6,7 @@ export default function Document() {
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#0a3d8f" />
+        <meta name="google-site-verification" content="Tl8Yoit5TiUqgiLeIuNEOuchIH9hI0j6ABRp3iQyfsQ" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
       </Head>

@@ -205,9 +205,21 @@ export default function BookingForm() {
         </p>
       )}
       {status === 'sent' && (
-        <p style={{ color: 'var(--teal)', marginTop: 14, marginBottom: 0 }}>
-          Sent! We will contact you shortly to confirm price and timing.
-        </p>
+        <div className="form-success" role="status">
+          <span className="form-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </span>
+          <div>
+            <strong>Thank you!</strong>
+            <p>
+              Your booking request has been received. Our team will contact
+              you shortly to confirm price and timing — for a faster reply,
+              you can also reach us directly on WhatsApp.
+            </p>
+          </div>
+        </div>
       )}
       {status === 'error' && (
         <p style={{ color: 'var(--danger)', marginTop: 14, marginBottom: 0 }}>

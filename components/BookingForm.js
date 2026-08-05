@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { services } from '../data/services'
 
-const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+const WEB3FORMS_ACCESS_KEY = 'ea030b52-c934-4ab7-8194-222cbbb9b887'
 
 export default function BookingForm() {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
@@ -55,7 +55,7 @@ export default function BookingForm() {
       services.find((s) => s.slug === formData.get('service'))?.title ||
       formData.get('service')
     formData.set('service', serviceTitle)
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY || '')
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
 
     setStatus('sending')
     try {
